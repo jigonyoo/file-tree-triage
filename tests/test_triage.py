@@ -5,6 +5,18 @@ import inventory, triage
 ROOT = os.path.join(os.path.dirname(__file__), "..", "fixtures", "drive")
 NOW = time.mktime(time.strptime("2026-08-24", "%Y-%m-%d"))
 
+# git does not store mtimes, so a fresh clone stamps every fixture "today".
+# Pin them here: the two stale fixtures well over a year before NOW, the rest near NOW.
+STALE = {os.path.join("Principal", "Research", "market_sizing.md"),
+         os.path.join("Shared", "Inbox", "IMG_4471.md")}
+
+def setUpModule():
+    for dirpath, _, names in os.walk(ROOT):
+        for n in names:
+            p = os.path.join(dirpath, n)
+            t = NOW - (400 if os.path.relpath(p, ROOT) in STALE else 1) * 86400
+            os.utime(p, (t, t))
+
 def go():
     files = inventory.walk(ROOT)
     return files, triage.run(files, now=NOW)
