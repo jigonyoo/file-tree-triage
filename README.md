@@ -1,5 +1,7 @@
 # file-tree-triage
 
+[![CI](https://github.com/jigonyoo/file-tree-triage/actions/workflows/ci.yml/badge.svg)](https://github.com/jigonyoo/file-tree-triage/actions/workflows/ci.yml)
+
 Deduplication for a real person's drive, where the tool's job is to be **clear about which pairs it
 is not allowed to decide**. It produces a plan. It never deletes anything.
 
